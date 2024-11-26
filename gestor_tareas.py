@@ -36,19 +36,40 @@ def mostrar_menu():
     print("Opciones:")
     print("1: Salir del programa")
     print("2: Crear una nueva tarea")
+    print("3: Mostar tareas existentes")
 
 #Función par añadir una nueva tarea a la lista
 def crear_tarea():
     print("\n[+] ¡Vamos a crear una nueva tarea!\n")
     titulo = input("Inserte el título de la nueva tarea: \n") #Solicitamos el título de la tarea
     contenido = input("Inserte el contenido de la tarea: \n") #Solicitamos el contenido de la tarea
-    status = input("Inserte el status de la tarea (True/False)\n") #Pedimos el status de la tarea
+    status = None
+
+    while True:
+
+        user_input = input("Inserte el status de la tarea (True/False)\n") #Pedimos el status de la tarea
+        if user_input.lower() == "true":
+            status = True
+            break
+        elif user_input.lower() == "false":
+            status = False
+            break
+        else:
+            print("\n[!] Por favor inserte un valor válido\n")
+
     numero_de_tarea = str(len(tareas) + 1) #Calculamos el número de tarea
-
     tareas["tarea"+numero_de_tarea] = Tarea(titulo, contenido, status) #Creamos la nueva tarea
-
     print(f"\n[+] Se ha creado la tarea '{'tarea'+numero_de_tarea}':\n")
     print(tareas["tarea"+numero_de_tarea])
+
+#Función para mostrar tareas existentes
+def mostrar_tareas():
+
+    print("\nA continuación se muestran las tareas existentes: \n")
+    for tarea in tareas:
+
+        print(f"{tarea}: '{tareas[tarea].titulo}'")
+
 
 tareas = {} #Set donde se guardarán las tareas
 
@@ -66,4 +87,6 @@ while True:
     elif opcion == 2:
         # Opción para crear la tarea
         crear_tarea()
-
+    elif opcion == 3:
+        #Opción para mostar tareas
+        mostrar_tareas()

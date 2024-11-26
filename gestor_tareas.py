@@ -36,7 +36,8 @@ def mostrar_menu():
     print("Opciones:")
     print("1: Salir del programa")
     print("2: Crear una nueva tarea")
-    print("3: Mostar tareas existentes")
+    print("3: Mostrar tareas existentes")
+    print("4: Mostrar detalles de una tarea existente")
 
 #Función par añadir una nueva tarea a la lista
 def crear_tarea():
@@ -65,11 +66,23 @@ def crear_tarea():
 #Función para mostrar tareas existentes
 def mostrar_tareas():
 
-    print("\nA continuación se muestran las tareas existentes: \n")
+    if len(tareas) == 0:
+        print("\n[!] No hay tareas por el momento\n")
+
     for tarea in tareas:
 
+        print("\n[+] A continuación se muestran las tareas existentes: \n")
         print(f"{tarea}: '{tareas[tarea].titulo}'")
 
+# Función par mostrar detalles
+def mostrar_detalles():
+    print("\n[+] Vamos a ver las tareas en detale\n")
+    tarea = input("¿Qué tarea desea ver con detalle? \n")
+    if tarea in tareas:
+        print(f"A continuación se muestran los detalles de '{tarea}':\n")
+        print(tareas[tarea])
+    else:
+        print("\n[!] Por favor proporcione una tarea existente\n")
 
 tareas = {} #Set donde se guardarán las tareas
 
@@ -90,3 +103,5 @@ while True:
     elif opcion == 3:
         #Opción para mostar tareas
         mostrar_tareas()
+    elif opcion == 4:
+        mostrar_detalles()

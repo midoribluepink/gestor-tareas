@@ -38,6 +38,7 @@ def mostrar_menu():
     print("2: Crear una nueva tarea")
     print("3: Mostrar tareas existentes")
     print("4: Mostrar detalles de una tarea existente")
+    print("5: Modificar tareas")
 
 #Función par añadir una nueva tarea a la lista
 def crear_tarea():
@@ -66,10 +67,10 @@ def crear_tarea():
 #Función para mostrar tareas existentes
 def mostrar_tareas():
 
-    if len(tareas) == 0:
+    if len(tareas) == 0: # Comprobamos si hay tareas existentes
         print("\n[!] No hay tareas por el momento\n")
 
-    for tarea in tareas:
+    for tarea in tareas: #Listamos las tareas existente
 
         print("\n[+] A continuación se muestran las tareas existentes: \n")
         print(f"{tarea}: '{tareas[tarea].titulo}'")
@@ -84,6 +85,59 @@ def mostrar_detalles():
     else:
         print("\n[!] Por favor proporcione una tarea existente\n")
 
+# Función para modificar tareas
+def modifcar_tarea():
+    print("\n[+] Vamos a modificar las tareas\n")
+    tarea = input("¿Qué tarea quiere modificar?\n") #Solicitamos la tarea a modificar
+    if tarea in tareas: #Comprobamos que exista
+
+        while True: #Bucle que permite equivocarse en la selección de modificación
+            try: #Manejo de excepción que asegura que se coloque un número
+                opcion = int(input("¿Qué desea modificar? (1: Contenido. 2: Status. 3: Agregar notas.):\n")) #Guardamos la opción
+                if opcion == 1:
+                    #Cambiar el contenido de la tarea
+                    print("\n[+] Vamos a modificar el contenido de la nota\n")
+                    contenido = input("Inserte la nueva descripción: ") #Pedimos la nueva descripción
+                    print(f"\n[+] Se reemplazó '{tareas[tarea].contenido}' por '{contenido}'\n")
+                    tareas[tarea].contenido = contenido #Cambiamos la descripción de la tarea
+                    break
+                elif opcion == 2:
+                    #Modificar el status de la tarea
+                    print("\n[+] Vamos a modificar el status de la nota\n")
+
+                    while True: #Bucle que permite equivocarse en el input de status de tarea
+
+                        status = None
+                        user_input = input("Inserte el nuevo status de la tarea (True/False)\n") #Pedimos el status de la tarea
+                        if user_input.lower() == "true":
+                            status = True
+                            break
+                        elif user_input.lower() == "false":
+                            status = False
+                            break
+                        else:
+                            print("\n[!] Por favor inserte un valor válido\n")
+
+                    print(f"\n[+] Se cambió el status de '{'Completada' if tareas[tarea].status else 'No completada'}' a '{'Completada' if status else 'No completada'}'")
+                    tareas[tarea].status = status #Modificamos el status de la tarea
+                    break
+                elif opcion == 3:
+                    #Agregar una nota a la descripción de la tarea
+                    print("\n[+] Vamos a agregar una nota a la tarea\n")
+                    nota = input("Inserte la nota que desea agregar: ")
+                    tareas[tarea].agregar_notas(nota)
+                    print(f"\n[+] Se agregó la nota a la descripción de la tarea:\n\nDescripción:\n\n'{tareas[tarea].contenido}'")
+                    break
+                else:
+                    print("\n[!] Por favor proporcione un número válido\n")
+
+            except:
+                print("\n[+] Por favor proporcione un número\n")
+         
+    else:
+
+        print("\n[!] Por favor proporcione una tarea válida\n")
+
 tareas = {} #Set donde se guardarán las tareas
 
 # Bucle principal del programa
@@ -91,7 +145,11 @@ while True:
     
     mostrar_menu() #Mostramos el menú de opciones
 
-    opcion = int(input("\n¿Qué es lo que desea hacer?\n")) #Solicitamos la instrucción de ejecución
+    try:
+        opcion = int(input("\n¿Qué es lo que desea hacer?\n")) #Solicitamos la instrucción de ejecución
+    except:
+        print("\n[!] Por favor proporcione un número como opción\n")
+        continue
 
     if opcion == 1:
         # Opción para cerrar el programa 
@@ -104,4 +162,10 @@ while True:
         #Opción para mostar tareas
         mostrar_tareas()
     elif opcion == 4:
+        #Opción para mostrar detalles
         mostrar_detalles()
+    elif opcion == 5:
+        #Opción par modificar tareas
+        modifcar_tarea()
+    else:
+        print("\n[!] Por favor proporcione una opción válida\n")

@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 
+import json, os
+
 # Creación del objeto tarea
+
+tareas = {} #Dict donde se guardarán las tareas
 
 class Tarea():
 
@@ -29,6 +33,43 @@ class Tarea():
     def modificar_contenido(self, contenido): # Método que permite cambiar completamente la descripción de una tarea
 
         self.contenido = contenido
+
+    def to_dict(self): #Método que convierte una instancia en un diccionario
+
+        return {
+            "titulo": self.titulo,
+            "contenido": self.contenido,
+            "status": self.status,
+        }
+
+    @staticmethod
+    def from_dict(datos): #Método para crear una instancia desde un diccionario
+
+        return Tarea(datos["titulo"], datos["contenido"], datos["status"])
+
+# Función para guardar tareas en archivo
+def guardar_tareas():
+    with open("tareas.json", "w") as archivo:
+        #Las tareas pasan a ser una lista de diccionarios
+        json.dump({k: v.to_dict() for k, v in tareas.items()}, archivo, indent = 4)
+
+    print("[+] Las tareas han sido guardadas en 'tareas.json'")
+
+def cargar_tareas():
+    global tareas
+    try:
+        with open("tareas.json", "r") as archivo: #Abre el archivo con tareas
+            datos = json.load(archivo)
+            tareas = {k: Tarea.from_dict(v) for k, v in datos.items()}
+
+        print("[+] Las tares han sido cargadas desde 'tareas.json'")
+    except FileNotFoundError:
+        #Si no se encuentra el archio se archivo se crea uno nuevo
+        print("[!] No se encontró el archivo 'tareas.json'. Se iniciará una lista vacía")
+        tareas = {}
+    except excepcion as e:
+        print(f"[!] Ocurrió un error al cargar las tareas: {e}. Se iniciará una lista vacía")
+        tareas = {}
 
 #Función para mostar el menú de opciones
 def mostrar_menu():
@@ -60,10 +101,20 @@ def crear_tarea():
         else:
             print("\n[!] Por favor inserte un valor válido\n")
 
-    numero_de_tarea = str(len(tareas) + 1) #Calculamos el número de tarea
-    tareas["tarea"+numero_de_tarea] = Tarea(titulo, contenido, status) #Creamos la nueva tarea
-    print(f"\n[+] Se ha creado la tarea '{'tarea'+numero_de_tarea}':\n")
-    print(tareas["tarea"+numero_de_tarea])
+    numero_de_tarea = len(tareas) + 1 #Calculamos el número de tarea
+    while True:
+        # Bucle que nos permite no repetir números de tarea y se le asignará el número siguente más próximo disponible
+
+        if "tarea"+str(numero_de_tarea) in tareas.keys():
+
+            numero_de_tarea+=1 
+        else:
+
+            tareas["tarea"+str(numero_de_tarea)] = Tarea(titulo, contenido, status) #Creamos la nueva tarea
+            break
+
+    print(f"\n[+] Se ha creado la tarea '{'tarea'+str(numero_de_tarea)}':\n")
+    print(tareas["tarea"+str(numero_de_tarea)])
 
 #Función para mostrar tareas existentes
 def mostrar_tareas():
@@ -71,9 +122,9 @@ def mostrar_tareas():
     if len(tareas) == 0: # Comprobamos si hay tareas existentes
         print("\n[!] No hay tareas por el momento\n")
 
+    print("\n[+] A continuación se muestran las tareas existentes: \n")
     for tarea in tareas: #Listamos las tareas existente
 
-        print("\n[+] A continuación se muestran las tareas existentes: \n")
         print(f"{tarea}: '{tareas[tarea].titulo}'")
 
 # Función par mostrar detalles
@@ -160,16 +211,15 @@ def eliminar_tarea():
             print("\n[!] La tarea no existe\n")
             break
 
-tareas = {} #Set donde se guardarán las tareas
-
+cargar_tareas()
 # Bucle principal del programa
 while True:
-    
+
     mostrar_menu() #Mostramos el menú de opciones
 
     try:
         opcion = int(input("\n¿Qué es lo que desea hacer?\n")) #Solicitamos la instrucción de ejecución
-    except:
+    except ValueError:
         print("\n[!] Por favor proporcione un número como opción\n")
         continue
 
@@ -179,18 +229,26 @@ while True:
         break
     elif opcion == 2:
         # Opción para crear la tarea
+        os.system("clear")
         crear_tarea()
     elif opcion == 3:
         #Opción para mostar tareas
+        os.system("clear")
         mostrar_tareas()
     elif opcion == 4:
         #Opción para mostrar detalles
+        os.system("clear")
         mostrar_detalles()
     elif opcion == 5:
         #Opción par modificar tareas
+        os.system("clear")
         modifcar_tarea()
     elif opcion == 6:
         #Opción para eliminar tareas
+        os.system("clear")
         eliminar_tarea()
     else:
         print("\n[!] Por favor proporcione una opción válida\n")
+
+
+guardar_tareas() #Guardar tareas

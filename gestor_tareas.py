@@ -39,6 +39,7 @@ def mostrar_menu():
     print("3: Mostrar tareas existentes")
     print("4: Mostrar detalles de una tarea existente")
     print("5: Modificar tareas")
+    print("6: Eliminar tarea")
 
 #Función par añadir una nueva tarea a la lista
 def crear_tarea():
@@ -138,6 +139,27 @@ def modifcar_tarea():
 
         print("\n[!] Por favor proporcione una tarea válida\n")
 
+# Función para eliminar taras
+def eliminar_tarea():
+    print("\n[+] Vamos a eliminar tareas \n")
+    tarea = input("¿Qué tarea desea eliminar?:\n")
+    # Bucle para validar la opción (y/n)
+    while True:
+        if tarea in tareas: #Comprobamos si la tarea existe
+            opcion = input(f"¿Seguro que desea eliminar '{tareas[tarea].titulo}'? (y/n)\n")
+            if opcion.lower() == "y": #Validad qué opción elige el usuario
+                del tareas[tarea]
+                print("\n[+] Se ha eliminado la tarea\n")
+                break
+            elif opcion.lower() == "n":
+                print("\n[+] No se eliminó la tarea\n")
+                break
+            else:
+                print("\n[+] Por favor inserte una opción válida\n")
+        else:
+            print("\n[!] La tarea no existe\n")
+            break
+
 tareas = {} #Set donde se guardarán las tareas
 
 # Bucle principal del programa
@@ -167,5 +189,8 @@ while True:
     elif opcion == 5:
         #Opción par modificar tareas
         modifcar_tarea()
+    elif opcion == 6:
+        #Opción para eliminar tareas
+        eliminar_tarea()
     else:
         print("\n[!] Por favor proporcione una opción válida\n")

@@ -129,7 +129,7 @@ def mostrar_tareas():
 
 # Función par mostrar detalles
 def mostrar_detalles():
-    print("\n[+] Vamos a ver las tareas en detale\n")
+    print("\n[+] Vamos a ver las tareas en detalle\n")
     tarea = input("¿Qué tarea desea ver con detalle? \n")
     if tarea in tareas:
         print(f"A continuación se muestran los detalles de '{tarea}':\n")

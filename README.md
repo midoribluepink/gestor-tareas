@@ -1,7 +1,7 @@
 ## Gestor de tareas escrito en Python
 Realizado por: **midoribluepink** a modo de práctica
 
-Es un gestor de tareas simple para terminales Linux que nos permite crear tareas sencillas con un título, una descrióción y un status (completado/ no completado). De modo que podamos tener un control de las actividades a realizar
+Es un gestor de tareas simple para terminales Linux que nos permite crear tareas sencillas con un título, una descripción y un status (Completado/ No completado). Creado con la finalidad de tener un control de las actividades a realizar.
 
 ### Funcionamiento
 
@@ -20,7 +20,7 @@ donde nos indica que no se ha encontrado el archivo de tareas y creará uno nuev
 
 ### 1. Salir del programa
 
-Para salir del programa solo es necesrio proporcionar el número 1.
+Para salir del programa solo es necesario proporcionar el número 1.
 
 ### 2. Crear una nueva tarea
 
@@ -74,7 +74,7 @@ La opción 3, agregar notas, sirve por si queremos añadir información adiciona
 
 ### 6. Eliminar tarea
 
-La última opción es para deshacernos de tareas que ya no nos son útiles. Para acceder a esta característica es necesario proporcionar el parámetro 6. El nombre de la tarea y una confirmación para eliminarla.
+La última opción es para deshacernos de tareas que ya no nos son útiles. Para acceder a esta característica es necesario proporcionar el parámetro 6, el nombre de la tarea y una confirmación para eliminarla.
 
 ![image](https://github.com/user-attachments/assets/cb9d19e1-3eac-48c5-b74c-8bfcee44a1f5)
 
